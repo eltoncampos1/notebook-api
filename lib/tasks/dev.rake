@@ -1,6 +1,9 @@
 namespace :dev do
   desc "configure dev environment"
   task setup: :environment do
+    %x(rails db:drop db:create db:migrate)
+    puts "Reseting database..."
+
     puts "creating kinds..."
     kinds = %w(Friend Comercial Familiar)
     kinds.each do |kind|
@@ -26,11 +29,18 @@ namespace :dev do
 
     Contact.all.each do |contact|
       Random.rand(5).times do |i|
-        phone = Phone.create!(number: Faker::PhoneNumber.cell_phone, contact: contact)
+        Phone.create!(number: Faker::PhoneNumber.cell_phone, contact: contact)
         contact.save!
       end
     end
 
     puts "Phones created!"
+
+    puts "Creating Addresses..."
+    Contact.all.each do |contact|
+      Address.create!(street: Faker::Address.street_address, city: Faker::Address.city, contact: contact) 
+      contact.save!
+    end
+    puts "Address created!"
   end
 end
