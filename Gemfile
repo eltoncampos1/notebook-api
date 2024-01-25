@@ -2,7 +2,6 @@ source "https://rubygems.org"
 
 ruby "3.0.6"
 
-gem "faker"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3"
@@ -40,6 +39,8 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
+  gem "faker"
+  gem "pry-rails"
 end
 
 group :development do
