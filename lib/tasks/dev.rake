@@ -2,12 +2,14 @@ namespace :dev do
   desc "configure dev environment"
   task setup: :environment do
     puts "creating kinds..."
-      kinds = %w(Friend Comercial Familiar)
-      kinds.each do |kind|
-        Kind.create!(
-          description: kind 
-        )
-      end
+    kinds = %w(Friend Comercial Familiar)
+    kinds.each do |kind|
+      Kind.create!(
+        description: kind 
+      )
+    end
+
+    puts "kinds created!"
     puts "creating contacts..."
 
     100.times do |i| 
@@ -19,7 +21,16 @@ namespace :dev do
       )
     end
     puts "contacts created!" 
-    puts "kinds created!"
-  end
 
+    puts "Register phones..."
+
+    Contact.all.each do |contact|
+      Random.rand(5).times do |i|
+        phone = Phone.create!(number: Faker::PhoneNumber.cell_phone, contact: contact)
+        contact.save!
+      end
+    end
+
+    puts "Phones created!"
+  end
 end
