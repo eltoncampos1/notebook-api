@@ -10,12 +10,12 @@ class ContactsController < ApplicationController
 
   # GET /contacts/1
   def show
-    render json: @contact, include: [:kind, :address, :phone]
+    render json: @contact, include: [:kind, :address, :phones]
   end
 
   # POST /contacts
   def create
-    @contact = Contact.new(contact_params)
+    @contact = contact.new(contact_params)
 
     if @contact.save
       render json: @contact, include: [:kind, :phones, :address], status: :created, location: @contact
@@ -24,7 +24,7 @@ class ContactsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /contacts/1
+  # patch/put /contacts/1
   def update
     if @contact.update(contact_params)
       render json: @contact, include: [:kind, :phones, :address]
@@ -33,13 +33,13 @@ class ContactsController < ApplicationController
     end
   end
 
-  # DELETE /contacts/1
+  # delete /contacts/1
   def destroy
     @contact.destroy!
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    # use callbacks to share common setup or constraints between actions.
     def set_contact
       @contact = Contact.find(params[:id])
     end
